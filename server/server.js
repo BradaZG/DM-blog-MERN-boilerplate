@@ -23,12 +23,13 @@ mongoose
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useFindAndModify: false,
   })
   .then(() => {
     console.log('MongoDB has been connected...');
   })
   .catch((err) => console.log(err));
 
-app.use('/api/users/register', userRouter);
+app.use('/api/users', userRouter);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
