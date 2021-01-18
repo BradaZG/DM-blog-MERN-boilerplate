@@ -8,8 +8,8 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
 const config = require('./config/key');
-const User = require('./models/user');
-const userRouter = require('./routes/users');
+const usersRoutes = require('./routes/users');
+const blogsRoutes = require('./routes/blogs');
 
 const PORT = process.env.PORT;
 
@@ -30,6 +30,7 @@ mongoose
   })
   .catch((err) => console.log(err));
 
-app.use('/api/users', userRouter);
+app.use('/users', usersRoutes);
+app.use('/blogs', blogsRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -1,10 +1,10 @@
 const express = require('express');
-const router = express.Router();
+const Router = express.Router();
 
 const User = require('../models/user');
 const auth = require('../middleware/auth');
 
-router.get('/auth', auth, (req, res) => {
+Router.get('/auth', auth, (req, res) => {
   res.status(200).json({
     _id: req.user._id,
     isAdmin: req.user.role === 0 ? false : true,
@@ -17,7 +17,7 @@ router.get('/auth', auth, (req, res) => {
   });
 });
 
-router.post('/register', (req, res) => {
+Router.post('/register', (req, res) => {
   const user = new User(req.body);
 
   user.save((err, userData) => {
@@ -26,7 +26,7 @@ router.post('/register', (req, res) => {
   });
 });
 
-router.post('/login', (req, res) => {
+Router.post('/login', (req, res) => {
   // find the user by email
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user)
@@ -53,7 +53,7 @@ router.post('/login', (req, res) => {
   });
 });
 
-router.get('/logout', auth, (req, res) => {
+Router.get('/logout', auth, (req, res) => {
   User.findOneAndUpdate(
     { _id: req.user._id },
     { token: '', tokenExp: '' },
@@ -66,4 +66,4 @@ router.get('/logout', auth, (req, res) => {
   );
 });
 
-module.exports = router;
+module.exports = Router;
